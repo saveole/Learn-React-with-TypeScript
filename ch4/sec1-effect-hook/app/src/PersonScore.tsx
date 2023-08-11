@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useRef, useMemo } from 'react';
 import { getPerson } from './getPerson';
 
 type State = {
@@ -50,6 +50,9 @@ export function PersonScore() {
     });
   }, []);
 
+  //
+  const expensiveCalculation = useMemo(() => sillyExpensiveFunction(), []);
+
   if (loading) {
     return <div>Loading ...</div>;
   }
@@ -57,6 +60,7 @@ export function PersonScore() {
     <div>
       <h3>
         {name}, {score}
+        <p>{expensiveCalculation}</p>
         <br />
         <button ref={addButtonRef} onClick={() => dispatch({ type: 'increment' })}>
           Add
@@ -80,3 +84,12 @@ export function PersonScore() {
   return null;
 }
 */
+
+function sillyExpensiveFunction() {
+  console.log('Executing silly function');
+  let sum = 0;
+  for (let i = 0; i < 10000; i++) {
+    sum += i;
+  }
+  return sum;
+}
