@@ -1,13 +1,15 @@
-import { NavLink, Link, useSearchParams } from "react-router-dom";
+import { NavLink, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
 import logo from "./logo.svg";
 
 export function Header() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {
     const formData = new FormData(e.currentTarget);
     const search = formData.get("search") as string;
-    setSearchParams({ search });
+    navigate(`/products/?search=${search}`);
+    // setSearchParams({ search });
   }
   return (
     <header className="text-center text-slate-50 bg-slate-900 h-40 p-5">
