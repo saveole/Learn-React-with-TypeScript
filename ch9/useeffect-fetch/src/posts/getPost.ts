@@ -3,11 +3,11 @@ import { PostData } from './types';
 export async function getPosts() {
   const response = await fetch(process.env.REACT_APP_API_URL!);
   const body = (await response.json()) as unknown;
-  assertIsPOsts(body);
+  assertIsPosts(body);
   return body;
 }
 
-export function assertIsPOsts(postData: unknown): asserts postData is PostData[] {
+export function assertIsPosts(postData: unknown): asserts postData is PostData[] {
   if (!Array.isArray(postData)) {
     throw new Error("posts isn't an array");
   }
