@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
-import { IdValue } from './types';
+import { ComponentPropsWithoutRef } from 'react';
+import { useChecked } from './useChecked';
 
 type Props<Data> = {
   data: Data[];
@@ -9,15 +9,7 @@ type Props<Data> = {
 } & ComponentPropsWithoutRef<'ul'>;
 
 export function Checklist<Data>({ data, id, primary, secondary, ...ulProps }: Props<Data>) {
-  const [checkedIds, setCheckedIds] = useState<IdValue[]>([]);
-  // https://javascript.info/currying-partials
-  const handleCheckChange = (checkedId: IdValue) => () => {
-    const isChecked = checkedIds.includes(checkedId);
-    let newCheckedIds = isChecked
-      ? checkedIds.filter((itemCheckedid: IdValue) => itemCheckedid !== checkedId)
-      : checkedIds.concat(checkedId);
-    setCheckedIds(newCheckedIds);
-  };
+  const { handleCheckChange, checkedIds } = useChecked();
   return (
     <ul className="bg-gray-300 rounded p-10" {...ulProps}>
       {data.map((item) => {
