@@ -92,3 +92,21 @@ test("should call onCheckedIdsChange when clicked", async () => {
   await user.click(screen.getByTestId("Checklist__input__1"));
   expect(calledWith).toStrictEqual([1]);
 });
+
+test("should check and uncheck items when clicked", async () => {
+  const user = userEvent.setup();
+  render(
+    <Checklist
+      data={[{ id: 1, name: "Lucy", role: "Manager" }]}
+      id="id"
+      primary="name"
+      secondary="role"
+    />,
+  );
+  const lucyCheckBox = screen.getByTestId("Checklist__input__1");
+  expect(lucyCheckBox).not.toBeChecked();
+  await user.click(lucyCheckBox);
+  expect(lucyCheckBox).toBeChecked();
+  await user.click(lucyCheckBox);
+  expect(lucyCheckBox).not.toBeChecked();
+});
